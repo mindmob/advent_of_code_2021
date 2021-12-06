@@ -18,8 +18,7 @@ public class Day3b {
         var sizeOfOxygen = oxygenList.size();
         var oxygenIndex = 0;
         while (sizeOfOxygen > 1) {
-
-            oxygenList = splitByIndex(oxygenList, oxygenIndex);
+            oxygenList = filterCommon(oxygenList, oxygenIndex);
             sizeOfOxygen = oxygenList.size();
             oxygenIndex++;
         }
@@ -35,7 +34,7 @@ public class Day3b {
         System.out.println("CO2 rating: " + co2List.get(0));
 
         var oxygenInt = Integer.parseInt(oxygenList.get(0),2);
-        var co2Int = Integer.parseInt(co2List.get(0).toString(),2);
+        var co2Int = Integer.parseInt(co2List.get(0),2);
         var result = oxygenInt * co2Int;
 
         System.out.println("result: " + result);
@@ -84,8 +83,8 @@ public class Day3b {
 
     public static Map<Character, List<String>> splitByIndex(List<String> input, int index) {
         var result = new HashMap<Character, List<String>>();
-        result.put('0', new LinkedList<String>());
-        result.put('1', new LinkedList<String>());
+        result.put('0', new LinkedList<>());
+        result.put('1', new LinkedList<>());
         for(var i : input) {
             if (i.charAt(index) == '0') {
                 result.get('0').add(i);
