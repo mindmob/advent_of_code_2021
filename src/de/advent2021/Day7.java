@@ -1,7 +1,5 @@
 package de.advent2021;
 
-import org.junit.jupiter.api.Assertions;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -10,7 +8,7 @@ public class Day7 {
 
     public static void main(String[] args) {
         var crabPositions = ReadFile.readSingleLineAsIntegers("input_day7.txt").toList();
-        var costs = Day7.fuelCosts(crabPositions);
+        var costs = fuelCosts(crabPositions);
         var minimum = Arrays.stream(costs).reduce(Integer::min).getAsInt();
         System.out.println("(Part 1) Minimum: " + minimum);
         var costs2 = fuelCostsIncremental(crabPositions);
