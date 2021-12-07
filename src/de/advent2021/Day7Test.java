@@ -38,4 +38,26 @@ public class Day7Test {
         System.out.println("Minimum: " + minimum);
     }
 
+    @Test
+    void testAlmostFibonacci() {
+        Assertions.assertEquals(66, Day7.almostFibonacci(11));
+    }
+
+    @Test
+    void testFuelCostForPositionIncremental() {
+        Assertions.assertEquals(206, Day7.fuelCostForPositionIncremental(crabPositions, 2));
+        Assertions.assertEquals(168, Day7.fuelCostForPositionIncremental(crabPositions, 5));
+    }
+
+    @Test
+    void testFuelCostsIncremental() {
+        var costs = Day7.fuelCostsIncremental(crabPositions);
+        Assertions.assertEquals(206, costs[2]);
+        System.out.println("Fuel costs: " + Arrays.toString(costs));
+        var minimum = Arrays.stream(costs).reduce(Integer::min).getAsInt();
+        Assertions.assertEquals(168, minimum);
+        System.out.println("Minimum: " + minimum);
+    }
+
+
 }

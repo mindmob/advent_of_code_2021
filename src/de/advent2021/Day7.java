@@ -12,7 +12,10 @@ public class Day7 {
         var crabPositions = ReadFile.readSingleLineAsIntegers("input_day7.txt").toList();
         var costs = Day7.fuelCosts(crabPositions);
         var minimum = Arrays.stream(costs).reduce(Integer::min).getAsInt();
-        System.out.println("Minimum: " + minimum);
+        System.out.println("(Part 1) Minimum: " + minimum);
+        var costs2 = fuelCostsIncremental(crabPositions);
+        var minimum2 = Arrays.stream(costs2).reduce(Integer::min).getAsInt();
+        System.out.println("(Part 2) Minimum: " + minimum2);
     }
 
     public static int[] fuelCosts(List<Integer> crabPositions) {
@@ -24,14 +27,32 @@ public class Day7 {
         return fuelCosts;
     }
 
+    // todo reduce duplicate code
+    public static int[] fuelCostsIncremental(List<Integer> crabPositions) {
+        var maxPosition = maxPosition(crabPositions);
+        var fuelCosts = new int[maxPosition];
+        for (int i = 0; i < maxPosition; i++) {
+            fuelCosts[i] = fuelCostForPositionIncremental(crabPositions, i);
+        }
+        return fuelCosts;
+    }
+
     public static int fuelCostForPosition(List<Integer> crabPositions, int targetPosition) {
         return crabPositions.stream().map(crab -> Math.abs(targetPosition - crab)).reduce(Integer::sum).get();
+    }
+
+    public static int fuelCostForPositionIncremental(List<Integer> crabPositions, int targetPosition) {
+        return crabPositions.stream().map(crab -> almostFibonacci(Math.abs(targetPosition - crab))).reduce(Integer::sum).get();
     }
 
     public static int maxPosition(List<Integer> crabPositions) {
         return crabPositions.stream().max(Comparator.naturalOrder()).get();
     }
 
+    public static int almostFibonacci(int i) {
+        if (i == 0) return 0;
+        return i + almostFibonacci(i - 1);
+    }
 
 
 }
