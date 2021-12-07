@@ -3,53 +3,46 @@ package de.advent2021;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 
 public class Day7 {
 
     public static void main(String[] args) {
         var crabPositions = ReadFile.readSingleLineAsIntegers("input_day7.txt").toList();
-        var costs = fuelCosts(crabPositions);
+        var costs = fuelCosts(crabPositions, Day7::mapLinear);
         var minimum = Arrays.stream(costs).reduce(Integer::min).getAsInt();
         System.out.println("(Part 1) Minimum: " + minimum);
-        var costs2 = fuelCostsIncremental(crabPositions);
+        var costs2 = fuelCosts(crabPositions, Day7::mapIncremental);
         var minimum2 = Arrays.stream(costs2).reduce(Integer::min).getAsInt();
         System.out.println("(Part 2) Minimum: " + minimum2);
     }
 
-    public static int[] fuelCosts(List<Integer> crabPositions) {
+    public static int[] fuelCosts(List<Integer> crabPositions, BinaryOperator<Integer> mappingFunction) {
         var maxPosition = maxPosition(crabPositions);
         var fuelCosts = new int[maxPosition];
         for (int i = 0; i < maxPosition; i++) {
-            fuelCosts[i] = fuelCostForPosition(crabPositions, i);
+            fuelCosts[i] = fuelCostForPosition(crabPositions, i, mappingFunction);
         }
         return fuelCosts;
     }
 
-    // todo reduce duplicate code
-    public static int[] fuelCostsIncremental(List<Integer> crabPositions) {
-        var maxPosition = maxPosition(crabPositions);
-        var fuelCosts = new int[maxPosition];
-        for (int i = 0; i < maxPosition; i++) {
-            fuelCosts[i] = fuelCostForPositionIncremental(crabPositions, i);
-        }
-        return fuelCosts;
-    }
-
-    public static int fuelCostForPosition(List<Integer> crabPositions, int targetPosition) {
-        return crabPositions.stream().map(crab -> Math.abs(targetPosition - crab)).reduce(Integer::sum).get();
-    }
-
-    public static int fuelCostForPositionIncremental(List<Integer> crabPositions, int targetPosition) {
-        return crabPositions.stream().map(crab ->
-        {
-            var fulecost=  Math.abs(targetPosition - crab);
-            return fulecost + (fulecost*(fulecost-1)/2);
-        }).reduce(Integer::sum).get();
+    public static int fuelCostForPosition(List<Integer> crabPositions, int targetPosition, BinaryOperator<Integer> mappingFunction) {
+        return crabPositions.stream().map(crab -> mappingFunction.apply(crab, targetPosition)).reduce(Integer::sum).get();
     }
 
     public static int maxPosition(List<Integer> crabPositions) {
         return crabPositions.stream().max(Comparator.naturalOrder()).get();
     }
 
+    public static Integer mapLinear(Integer crab, Integer targetPosition) {
+        return Math.abs(targetPosition - crab);
+    }
+
+    public static Integer mapIncremental(Integer crab, Integer targetPosition) {
+        var fulecost=  Math.abs(targetPosition - crab);
+        return fulecost + (fulecost*(fulecost-1)/2);
+    }
 
 }

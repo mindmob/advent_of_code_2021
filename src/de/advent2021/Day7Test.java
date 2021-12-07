@@ -24,13 +24,13 @@ public class Day7Test {
 
     @Test
     void testFuelCostForPosition() {
-        var cost = Day7.fuelCostForPosition(crabPositions, 2);
+        var cost = Day7.fuelCostForPosition(crabPositions, 2, Day7::mapLinear);
         Assertions.assertEquals(37, cost);
     }
 
     @Test
     void testFuelCosts() {
-        var costs = Day7.fuelCosts(crabPositions);
+        var costs = Day7.fuelCosts(crabPositions, Day7::mapLinear);
         Assertions.assertEquals(37, costs[2]);
         System.out.println("Fuel costs: " + Arrays.toString(costs));
         var minimum = Arrays.stream(costs).reduce(Integer::min).getAsInt();
@@ -40,13 +40,13 @@ public class Day7Test {
 
     @Test
     void testFuelCostForPositionIncremental() {
-        Assertions.assertEquals(206, Day7.fuelCostForPositionIncremental(crabPositions, 2));
-        Assertions.assertEquals(168, Day7.fuelCostForPositionIncremental(crabPositions, 5));
+        Assertions.assertEquals(206, Day7.fuelCostForPosition(crabPositions, 2, Day7::mapIncremental));
+        Assertions.assertEquals(168, Day7.fuelCostForPosition(crabPositions, 5, Day7::mapIncremental));
     }
 
     @Test
     void testFuelCostsIncremental() {
-        var costs = Day7.fuelCostsIncremental(crabPositions);
+        var costs = Day7.fuelCosts(crabPositions, Day7::mapIncremental);
         Assertions.assertEquals(206, costs[2]);
         System.out.println("Fuel costs: " + Arrays.toString(costs));
         var minimum = Arrays.stream(costs).reduce(Integer::min).getAsInt();
