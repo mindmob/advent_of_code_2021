@@ -8,11 +8,24 @@ import java.util.stream.Stream;
 public class Day5a {
 
     public static void main(String[] args) {
+        solvePart1();
+        solvePart2();
+    }
+
+    private static void solvePart1() {
         var input = ReadFile.readFile("input_day5a.txt");
         var lines = parseInput(input);
-        var filtered = filterOnlyVerticalOrHorizontal(lines);
+        var filtered = lines.filter(line -> Day5a.isVerticalOrHorizontal(line));
         var field = createField(filtered);
-        System.out.println("Result: " + field.numberOfIntersections());
+        System.out.println("Result part 1: " + field.numberOfIntersections());
+    }
+
+    private static void solvePart2() {
+        var input = ReadFile.readFile("input_day5a.txt");
+        var lines = parseInput(input);
+        var filtered = lines.filter(line -> Day5a.isVerticalOrHorizontal(line) || Day5a.isDiagonal(line));
+        var field = createField(filtered);
+        System.out.println("Result part 2: " + field.numberOfIntersections());
     }
 
     static Stream<Line2D> parseInput(List<String> input) {
@@ -30,12 +43,12 @@ public class Day5a {
         return new Line2D.Float(x1, y1, x2, y2);
     }
 
-    static Stream<Line2D> filterOnlyVerticalOrHorizontal(Stream<Line2D> input) {
-        return input.filter(line -> Day5a.isVerticalOrHorizontal(line));
-    }
-
     static boolean isVerticalOrHorizontal(Line2D line) {
         return (line.getX1() == line.getX2()) || (line.getY1() == line.getY2());
+    }
+
+    static boolean isDiagonal(Line2D line) {
+        return Math.abs(line.getX1() - line.getX2()) == Math.abs(line.getY1() - line.getY2());
     }
 
     static Line2D maxBoundsOfTwoLines(Line2D line1, Line2D line2) {

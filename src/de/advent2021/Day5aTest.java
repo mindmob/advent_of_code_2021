@@ -35,7 +35,7 @@ public class Day5aTest {
 
     @Test
     void testFilterNonHorizontalOrVertical() {
-        var lines = Day5a.filterOnlyVerticalOrHorizontal(Day5a.parseInput(input)).toList();
+        var lines = Day5a.parseInput(input).filter(line -> Day5a.isVerticalOrHorizontal(line)).toList();
         Assertions.assertEquals(6, lines.size());
     }
 
@@ -70,7 +70,7 @@ public class Day5aTest {
 
     @Test
     void testNumberOfIntersections() {
-        var lines = Day5a.filterOnlyVerticalOrHorizontal(Day5a.parseInput(input));
+        var lines = Day5a.parseInput(input).filter(line -> Day5a.isVerticalOrHorizontal(line));
         var field = Day5a.createField(lines);
         var number = field.numberOfIntersections();
         Assertions.assertEquals(5, number);
