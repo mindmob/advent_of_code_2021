@@ -15,7 +15,7 @@ public class Day5a {
     private static void solvePart1() {
         var input = ReadFile.readFile("input_day5a.txt");
         var lines = parseInput(input);
-        var filtered = lines.filter(line -> Day5a.isVerticalOrHorizontal(line));
+        var filtered = lines.filter(Day5a::isVerticalOrHorizontal);
         var field = createField(filtered);
         System.out.println("Result part 1: " + field.numberOfIntersections());
     }
@@ -54,14 +54,13 @@ public class Day5a {
     static Line2D maxBoundsOfTwoLines(Line2D line1, Line2D line2) {
             var bounds1 = line1.getBounds2D();
             var bounds2 = line2.getBounds2D();
-            var maxX = bounds1.getMaxX() > bounds2.getMaxX() ? bounds1.getMaxX() : bounds2.getMaxX();
-            var maxY = bounds1.getMaxY() > bounds2.getMaxY() ? bounds1.getMaxY() : bounds2.getMaxY();
-            var maxLine = new Line2D.Float(0, 0, (float)maxX, (float)maxY);
-            return maxLine;
+            var maxX = Math.max(bounds1.getMaxX(), bounds2.getMaxX());
+            var maxY = Math.max(bounds1.getMaxY(), bounds2.getMaxY());
+        return new Line2D.Float(0, 0, (float)maxX, (float)maxY);
     }
 
     static Line2D maxBoundsOfAll(Stream<Line2D> lines) {
-        return lines.reduce(new Line2D.Float(0f, 0f, 0f, 0f), (subtotal, element) -> maxBoundsOfTwoLines(subtotal, element));
+        return lines.reduce(new Line2D.Float(0f, 0f, 0f, 0f), Day5a::maxBoundsOfTwoLines);
     }
 
     static Field createField(Stream<Line2D> lines) {
@@ -79,7 +78,7 @@ public class Day5a {
 }
 
 // an easier way to find all intersections would be to calculate them directly from the lines.
-// however, this way we get a graphical output and can possibly use it to solve the second part easier.
+// however, this way we get a nice graphical output ;-)
 class Field {
     private int[][] field;
     public Field(int sizeX, int sizeY) {
@@ -108,7 +107,7 @@ class Field {
         }
     }
     public void addAll(Stream<Line2D> lines) {
-        lines.forEach(line -> addLine(line));
+        lines.forEach(this::addLine);
     }
     public int get(int x, int y) {
         return field[y][x];

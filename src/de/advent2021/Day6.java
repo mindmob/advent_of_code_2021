@@ -1,7 +1,5 @@
 package de.advent2021;
 
-import org.junit.jupiter.api.Assertions;
-
 import java.util.LinkedList;
 import java.util.List;
 
