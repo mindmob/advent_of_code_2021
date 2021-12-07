@@ -3,9 +3,7 @@ package de.advent2021;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
+import java.util.function.IntBinaryOperator;
 
 public class Day7 {
 
@@ -19,7 +17,7 @@ public class Day7 {
         System.out.println("(Part 2) Minimum: " + minimum2);
     }
 
-    public static int[] fuelCosts(List<Integer> crabPositions, BinaryOperator<Integer> mappingFunction) {
+    public static int[] fuelCosts(List<Integer> crabPositions, IntBinaryOperator mappingFunction) {
         var maxPosition = maxPosition(crabPositions);
         var fuelCosts = new int[maxPosition];
         for (int i = 0; i < maxPosition; i++) {
@@ -28,8 +26,8 @@ public class Day7 {
         return fuelCosts;
     }
 
-    public static int fuelCostForPosition(List<Integer> crabPositions, int targetPosition, BinaryOperator<Integer> mappingFunction) {
-        return crabPositions.stream().map(crab -> mappingFunction.apply(crab, targetPosition)).reduce(Integer::sum).get();
+    public static int fuelCostForPosition(List<Integer> crabPositions, int targetPosition, IntBinaryOperator mappingFunction) {
+        return crabPositions.stream().map(crab -> mappingFunction.applyAsInt(crab, targetPosition)).reduce(Integer::sum).get();
     }
 
     public static int maxPosition(List<Integer> crabPositions) {
