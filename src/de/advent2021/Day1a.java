@@ -1,15 +1,14 @@
-package de.advent2021.day1a;
+package de.advent2021;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Day1b {
+public class Day1a {
 
-    private static List<Integer> depths = List.of(
+    private static int[] depths = {
             199,
             200,
             208,
@@ -19,7 +18,7 @@ public class Day1b {
             240,
             269,
             260,
-            263);
+            263};
     
     private static String filename = "input_day1a.txt";
 
@@ -27,39 +26,25 @@ public class Day1b {
 
         var input = readFile();
         var inputInt = input.stream().map(a -> Integer.parseInt(a.trim())).collect(Collectors.toList());
-        var slidingWindows = calculateWindows(inputInt);
-        int numberOfIncreases = calculateNumberOfIncreases(slidingWindows);
+        int numberOfIncreases = calculateNumberOfIncreases(inputInt);
         System.out.println("Number of depth increases: " + numberOfIncreases);
     }
 
-    private static List<Integer> calculateWindows(List<Integer> input) {
-        var windows = new LinkedList<Integer>();
-        for (int offset = 0; offset < input.size() - 2; offset++) {
-            var sum = 0;
-            for (int j = 0; j < 3; j++) {
-                sum += input.get(offset + j);
-            }
-            windows.add(sum);
-            System.out.println(sum);
-        }
-        return windows;
-    }
-
-    private static int calculateNumberOfIncreases(List<Integer> input) {
+    private static int calculateNumberOfIncreases(List<Integer> depths) {
         int lastMeasurement = 0;
         int numberOfIncreases = 0;
-        for (int i = 0; i < input.size(); i++) {
-            if (input.get(i) > lastMeasurement && i > 0) {
+        for (int i = 0; i < depths.size(); i++) {
+            if (depths.get(i) > lastMeasurement && i > 0) {
                 numberOfIncreases++;
             }
-            lastMeasurement = input.get(i);
+            lastMeasurement = depths.get(i);
         }
         return numberOfIncreases;
     }
 
     private static List<String> readFile() {
         try{
-            Path path = Paths.get(Day1b.class.getClassLoader()
+            Path path = Paths.get(Day1a.class.getClassLoader()
                     .getResource(filename).toURI());
             return Files.lines(path).collect(Collectors.toList());
         }

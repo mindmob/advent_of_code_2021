@@ -1,4 +1,4 @@
-package de.advent2021.day1a;
+package de.advent2021;
 
 import java.util.HashMap;
 import java.util.LinkedList;

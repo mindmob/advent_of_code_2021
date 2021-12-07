@@ -1,8 +1,8 @@
-package de.advent2021.day1a;
+package de.advent2021;
 
 import java.util.List;
 
-public class Day2a {
+public class Day2b {
 
     private static List<String> testInput = List.of(
             "forward 5",
@@ -13,7 +13,7 @@ public class Day2a {
             "forward 2");
 
     public static void main(String[] args) {
-        var input = testInput; //ReadFile.readFile("input_day2a.txt");
+        var input = ReadFile.readFile("input_day2a.txt");
         var result = calculatePosition(input);
         System.out.println("Result: " + result);
     }
@@ -21,17 +21,20 @@ public class Day2a {
     private static int calculatePosition(List<String> input) {
         var horizontal = 0;
         var depth = 0;
+        var aim = 0;
         for(String s : input) {
             var tokens = s.split(" ");
             switch (tokens[0]) {
                 case "forward":
-                    horizontal += Integer.parseInt(tokens[1]);
+                    var x = Integer.parseInt(tokens[1]);
+                    horizontal += x;
+                    depth += aim * x;
                     break;
                 case "down":
-                    depth += Integer.parseInt(tokens[1]);
+                    aim += Integer.parseInt(tokens[1]);
                     break;
                 case "up":
-                    depth -= Integer.parseInt(tokens[1]);
+                    aim -= Integer.parseInt(tokens[1]);
                     break;
             }
         }

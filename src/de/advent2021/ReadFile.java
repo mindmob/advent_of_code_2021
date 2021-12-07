@@ -1,4 +1,4 @@
-package de.advent2021.day1a;
+package de.advent2021;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,7 +10,7 @@ public class ReadFile {
 
     public static List<String> readFile(String filename) {
         try{
-            Path path = Paths.get(Day1a.class.getClassLoader()
+            Path path = Paths.get(ReadFile.class.getClassLoader()
                     .getResource(filename).toURI());
             return Files.lines(path).collect(Collectors.toList());
         }
