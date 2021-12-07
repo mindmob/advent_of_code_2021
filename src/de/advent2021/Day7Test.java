@@ -39,11 +39,6 @@ public class Day7Test {
     }
 
     @Test
-    void testAlmostFibonacci() {
-        Assertions.assertEquals(66, Day7.almostFibonacci(11));
-    }
-
-    @Test
     void testFuelCostForPositionIncremental() {
         Assertions.assertEquals(206, Day7.fuelCostForPositionIncremental(crabPositions, 2));
         Assertions.assertEquals(168, Day7.fuelCostForPositionIncremental(crabPositions, 5));
