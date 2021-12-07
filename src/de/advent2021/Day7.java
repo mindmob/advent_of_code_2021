@@ -40,16 +40,15 @@ public class Day7 {
     }
 
     public static int fuelCostForPositionIncremental(List<Integer> crabPositions, int targetPosition) {
-        return crabPositions.stream().map(crab -> almostFibonacci(Math.abs(targetPosition - crab))).reduce(Integer::sum).get();
+        return crabPositions.stream().map(crab ->
+        {
+            var fulecost=  Math.abs(targetPosition - crab);
+            return fulecost + (fulecost*(fulecost-1)/2);
+        }).reduce(Integer::sum).get();
     }
 
     public static int maxPosition(List<Integer> crabPositions) {
         return crabPositions.stream().max(Comparator.naturalOrder()).get();
-    }
-
-    public static int almostFibonacci(int i) {
-        if (i == 0) return 0;
-        return i + almostFibonacci(i - 1);
     }
 
 
