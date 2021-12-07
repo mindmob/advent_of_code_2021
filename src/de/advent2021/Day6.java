@@ -6,7 +6,7 @@ import java.util.List;
 public class Day6 {
 
     public static void main(String[] args) {
-        var fishes = ReadFile.readSingleLineAsIntegers("input_day6.txt").map(x -> new Lanternfish(x)).toList();
+        var fishes = ReadFile.readSingleLineAsIntegers("input_day6.txt").map(Lanternfish::new).toList();
         for (int i = 0; i < 80; i++) {
             fishes = Day6.step(fishes);
         }
