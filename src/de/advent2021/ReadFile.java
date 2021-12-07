@@ -36,11 +36,15 @@ public class ReadFile {
 
     public static Stream<Integer> readSingleLineAsIntegers(String filename, String splitToken) {
         var input = readFileAsStream(filename);
-        return Arrays.stream(input.findFirst().get().split(splitToken)).map(x -> Integer.parseInt(x));
+        return Arrays.stream(input.findFirst().get().trim().split(splitToken)).map(x -> Integer.parseInt(x.trim()));
     }
 
     public static Stream<Integer> readSingleLineAsIntegers(String filename) {
         return readSingleLineAsIntegers(filename, ",");
+    }
+
+    public static Stream<Integer> readLinesAsIntegers(String filename) {
+        return readFileAsStream(filename).map(Integer::parseInt);
     }
 
 }
