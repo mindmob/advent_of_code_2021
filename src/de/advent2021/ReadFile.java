@@ -47,4 +47,24 @@ public class ReadFile {
         return readFileAsStream(filename).map(Integer::parseInt);
     }
 
+    public static int[][] readAsIntArray(String filename) {
+        var input = readFile(filename);
+        var result = new int[input.size()][input.get(0).length()];
+        for (int row = 0; row < input.size(); row++) {
+            for (int col = 0; col < input.get(0).length(); col++) {
+                result[row][col] = Integer.parseInt(input.get(row).substring(col, col+1));
+            }
+        }
+        return result;
+    }
+
+    public static void printIntArray(int[][] input) {
+        for (int row = 0; row < input.length; row++) {
+            for (int col = 0; col < input[0].length; col++) {
+                System.out.print(input[row][col]);
+            }
+            System.out.print('\n');
+        }
+    }
+
 }
